@@ -8,7 +8,7 @@ function cleanup() {
 trap cleanup EXIT
 
 VERSION=${1?Must specify the besu version to get}
-URL="https://consensys.bintray.com/pegasys-repo/besu-${VERSION}.zip"
+URL="https://dl.bintray.com/hyperledger-org/besu-repo/besu-${VERSION}.zip"
 echo "Downloading version ${VERSION} of besu from ${URL}..."
 curl -o "${TEMP}/besu-${VERSION}.zip" -L --fail "${URL}"
 
