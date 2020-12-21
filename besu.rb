@@ -5,7 +5,7 @@ class Besu < Formula
   # update with: ./updateBesu.sh <new-version>
   sha256 "b5f46d945754dedcbbb1e5dd96bf2bfd13272ff09c6a66c0150b979a578f4389"
 
-  depends_on :java => "11+"
+  depends_on "openjdk" => "11+"
 
   def install
     prefix.install "lib"
