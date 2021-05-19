@@ -5,6 +5,7 @@ class Besu < Formula
   # update with: ./updateBesu.sh <new-version>
   sha256 "33b0e15ee9ac5731439b9133bacc12879734cdd0a952032630c1e19bcc114be2"
 
+
   depends_on "openjdk" => "11+"
 
   def install
