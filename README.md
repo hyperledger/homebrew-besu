@@ -17,7 +17,7 @@ Run the besu executable:
 besu --help
 ```
 
-Refer to the [besu docs](https://besu.hyperledger.org) for further information.
+Refer to the [Besu docs](https://besu.hyperledger.org) for further information.
 
 To upgrade besu:
 ```
