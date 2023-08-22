@@ -3,7 +3,7 @@ class Besu < Formula
   homepage "https://github.com/hyperledger/besu"
   url "https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/23.7.1/besu-23.7.1.zip"
   # update with: ./updateBesu.sh <new-version>
-  sha256 "dfac11b2d6d9e8076ab2f86324d48d563badf76fd2a4aadc4469a97aef374ef5"
+  sha256 "75361e1815877bbd10eeeb5a6f9b82a8a15efec137dac816426b6e13ae461b09"
 
   depends_on "openjdk" => "11+"
 
