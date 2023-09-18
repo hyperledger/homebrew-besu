@@ -10,6 +10,7 @@ class Besu < Formula
   def install
     prefix.install "lib"
     bin.install "bin/besu"
+    bin.install "bin/evmtool"
   end
 
   test do
