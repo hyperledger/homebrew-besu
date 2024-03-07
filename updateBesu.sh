@@ -9,7 +9,7 @@ trap cleanup EXIT
 
 VERSION=${1?Must specify the besu version to get}
 
-URL="https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/${VERSION}/besu-${VERSION}.zip"
+URL="https://github.com/hyperledger/besu/releases/download/${VERSION}/besu-${VERSION}.zip"
 echo "Downloading version ${VERSION} of besu from ${URL}..."
 curl -o "${TEMP}/besu-${VERSION}.zip" -L --fail "${URL}"
 
