@@ -1,9 +1,9 @@
 class Besu < Formula
   desc "hyperledger besu ethereum client"
   homepage "https://github.com/hyperledger/besu"
-  url "https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/24.1.2/besu-24.1.2.zip"
+  url "https://github.com/hyperledger/besu/releases/download/24.3.0/besu-24.3.0.zip"
   # update with: ./updateBesu.sh <new-version>
-  sha256 "9033f300edd81c770d3aff27a29f59dd4b6142a113936886a8f170718e412971"
+  sha256 "41ea2ca734a3b377f43ee178166b5b809827084789378dbbe4e5b52bbd8e0674"
 
   depends_on "openjdk" => "17+"
 
