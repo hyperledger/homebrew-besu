@@ -1,0 +1,56 @@
+name: Update Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: 'Besu version to be updated'
+      name:
+        required: true
+        type: string
+        description: 'Name of the author to be included in git commit signature'
+      email:
+        required: true
+        type: string
+        description: 'Email of the author to be included in git commit signature'
+
+jobs:
+  update:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Setup branch name
+        id: branch
+        run: |
+          echo "BRANCH=update-${{ inputs.version }}-${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Update version
+        run: |
+          git config --global user.name "${{ inputs.name }}"
+          git config --global user.email "${{ inputs.email }}"
+          git checkout -b $BRANCH
+          bash updateBesu.sh ${{ inputs.version }}
+          git status -s | grep " M " | grep -q besu.rb || {
+            echo "No changes found in the besu.rb"
+            exit 1
+          }
+          git add besu.rb
+          git commit -s -m "Update Besu version ${{ inputs.version }}"
+          git push origin $BRANCH
+        env: 
+          BRANCH: ${{ steps.branch.outputs.BRANCH }}
+        
+      - name: Create Pull Request [permission needed]
+        run: |
+          gh pr create --base main --title "Update Besu version ${{ inputs.version }}" --body "Besu version update to ${{ inputs.version }}" || {
+            echo "Action does not have permission to create PRs. Ignoring..."
+          }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
