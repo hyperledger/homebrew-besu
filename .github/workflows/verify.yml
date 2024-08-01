@@ -1,0 +1,47 @@
+# This workflow install the Besu using homebrew and verify that installed version is the latest published version
+# This does NOT test running Besu in OSX
+# This is commonly used when the Besu version is updated and to verify the updated version can be installed 
+# on OSX using homebrew
+name: Verify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Install Besu
+        run: |
+          brew tap hyperledger/besu
+          brew install besu
+
+      - name: Verify Besu installed
+        run: |
+          brew list | grep besu || {
+            echo "ERROR: Could not find besu installed"
+            exit 1
+          }
+      
+      - name: Verify Besu version
+        run: |
+          LATEST_VERSION=$(grep url besu.rb | sed 's|.*download/\([^/]*\).*|\1|g')
+          
+          # Could not grep the line using 'besu:'' with GitHub runner
+          # So using the 'stable' word in grep which seems to appear only in the line required
+          INSTALLED_VERSION=$(brew info besu | grep 'stable' | sed 's|.* stable \([0-9]*\.[0-9]*\.[0-9]*\).*|\1|g')
+
+          if [[ "$LATEST_VERSION" == "$INSTALLED_VERSION" ]]
+          then
+            echo "Latest version [$LATEST_VERSION] match installed version [$INSTALLED_VERSION]"
+            exit 0
+          else
+            echo "ERROR: Latest version [$LATEST_VERSION] does not match installed version [$INSTALLED_VERSION]"
+            exit 1
+          fi
+ 
