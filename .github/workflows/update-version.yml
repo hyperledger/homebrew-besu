@@ -7,14 +7,6 @@ on:
         required: true
         type: string
         description: 'Besu version to be updated'
-      name:
-        required: true
-        type: string
-        description: 'Name of the author to be included in git commit signature'
-      email:
-        required: true
-        type: string
-        description: 'Email of the author to be included in git commit signature'
 
 jobs:
   update:
@@ -33,8 +25,8 @@ jobs:
 
       - name: Update version
         run: |
-          git config --global user.name "${{ inputs.name }}"
-          git config --global user.email "${{ inputs.email }}"
+          git config --global user.name "$GIT_NAME"
+          git config --global user.email "$GIT_EMAIL"
           git checkout -b $BRANCH
           bash updateBesu.sh ${{ inputs.version }}
           git status -s | grep " M " | grep -q besu.rb || {
@@ -46,6 +38,8 @@ jobs:
           git push origin $BRANCH
         env: 
           BRANCH: ${{ steps.branch.outputs.BRANCH }}
+          GIT_NAME: 'Besu Bot'
+          GIT_EMAIL: 'devops@consensys.net'
         
       - name: Create Pull Request [permission needed]
         run: |
